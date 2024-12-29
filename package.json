@@ -1,0 +1,64 @@
+{
+    "name": "terraform-fmt",
+    "displayName": "Terraform Format Extension",
+    "description": "Automatically formats Terraform files on save using terraform fmt",
+    "version": "1.0.0",
+    "publisher": "MohamedElbeltagy",
+    "icon": "icon.png",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Formatters"
+    ],
+    "activationEvents": [
+        "onLanguage:terraform"
+    ],
+    "main": "./src/extension.js",
+    "contributes": {
+        "languages": [
+            {
+                "id": "terraform",
+                "extensions": [
+                    ".tf",
+                    ".tfvars"
+                ],
+                "aliases": [
+                    "Terraform",
+                    "terraform"
+                ]
+            }
+        ]
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "node ./test/runTest.js",
+        "audit": "npm audit",
+        "audit:fix": "npm audit fix",
+        "prepackage": "npm audit && npm run lint"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.60.0",
+        "@types/node": "^14.x.x",
+        "@types/mocha": "^9.0.0",
+        "eslint": "^7.32.0",
+        "mocha": "^9.1.1",
+        "vscode-test": "^1.6.1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mohamed-elbeltagy/vs-code-extension-tf-format.git"
+    },
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": false,
+            "description": "This extension requires workspace trust to execute terraform commands"
+        }
+    },
+    "enabledApiProposals": [],
+    "extensionKind": ["workspace"]
+}

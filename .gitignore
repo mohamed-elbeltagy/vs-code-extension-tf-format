@@ -1,0 +1,7 @@
+node_modules/
+.vscode-test/
+*.vsix
+coverage/
+test-fixtures/
+.DS_Store
+package-lock.json  # Optional, but recommended to include for reproducible builds 
