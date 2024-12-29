@@ -25,7 +25,6 @@ function isValidFilePath(filePath) {
         
         return true;
     } catch (error) {
-        console.error('Path validation error:', error);
         return false;
     }
 }
@@ -51,9 +50,21 @@ function activate(context) {
                 
                 await execAsync(`terraform fmt "${filePath}"`, options);
             } catch (error) {
-                // Log error details but show a sanitized message to user
-                console.error('Terraform formatting error:', error);
-                vscode.window.showErrorMessage('Failed to format Terraform file. Please ensure terraform is installed correctly.');
+                const errorStr = error.message || '';
+                
+                if (error.code === 'ENOENT') {
+                    vscode.window.showErrorMessage('Terraform not found. Please ensure it is installed and added to PATH.');
+                } else if (errorStr.includes('Error: Invalid expression')) {
+                    vscode.window.showErrorMessage('Invalid Terraform syntax: The file contains invalid expressions or incomplete blocks.');
+                } else if (errorStr.includes('Error: Missing name for block')) {
+                    vscode.window.showErrorMessage('Invalid Terraform syntax: Block is missing a name or label.');
+                } else if (errorStr.includes('Error: Argument or block definition required')) {
+                    vscode.window.showErrorMessage('Invalid Terraform syntax: Empty blocks are not allowed.');
+                } else if (errorStr.includes('Error: Invalid block definition')) {
+                    vscode.window.showErrorMessage('Invalid Terraform syntax: The file contains malformed block definitions.');
+                } else {
+                    vscode.window.showErrorMessage('Failed to format Terraform file: The file contains invalid HCL syntax.');
+                }
             }
         }
     });

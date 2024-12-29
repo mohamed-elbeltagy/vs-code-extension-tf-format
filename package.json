@@ -2,7 +2,7 @@
     "name": "terraform-fmt",
     "displayName": "Terraform Format Extension",
     "description": "Automatically formats Terraform files on save using terraform fmt",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "MohamedElbeltagy",
     "icon": "icon.png",
     "engines": {
