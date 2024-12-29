@@ -9,8 +9,11 @@
         "vscode": "^1.60.0"
     },
     "categories": [
-        "Formatters"
-    ],
+        "Programming Languages",
+        "Other",
+        "Formatters",
+        "Linters"
+      ],
     "activationEvents": [
         "onLanguage:terraform"
     ],
@@ -46,7 +49,14 @@
         "mocha": "^9.1.1",
         "vscode-test": "^1.6.1"
     },
-    "keywords": [],
+    "keywords": [
+        "devops",
+        "terraform",
+        "hcl",
+        "format",
+        "linter",
+        "formatter"
+      ],
     "author": "",
     "license": "MIT",
     "repository": {
