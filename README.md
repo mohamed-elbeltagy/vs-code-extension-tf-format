@@ -26,6 +26,12 @@ This extension doesn't require any additional settings.
 
 ## Release Notes
 
+### 1.2.0
+
+- Added 500ms delay before formatting to prevent conflicts with HashiCorp's Terraform extension
+- Added protection against concurrent formatting operations on the same file
+- Improved error handling and user feedback for various Terraform syntax errors
+
 ### 1.1.0
 
 - Improved error messages for invalid HCL syntax

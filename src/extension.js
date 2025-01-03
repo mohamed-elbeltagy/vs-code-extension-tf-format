@@ -30,17 +30,31 @@ function isValidFilePath(filePath) {
 }
 
 function activate(context) {
+    // Create a map to track formatting status
+    const formattingInProgress = new Map();
+
     let disposable = vscode.workspace.onWillSaveTextDocument(async (event) => {
         if (event.document.languageId === 'terraform') {
             const filePath = event.document.uri.fsPath;
             
-            // Validate file path before processing
-            if (!isValidFilePath(filePath)) {
-                vscode.window.showErrorMessage('Invalid file path detected');
+            // Check if formatting is already in progress for this file
+            if (formattingInProgress.get(filePath)) {
                 return;
             }
+
+            // Mark formatting as in progress
+            formattingInProgress.set(filePath, true);
             
             try {
+                // Add delay before formatting
+                await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
+
+                // Validate file path before processing
+                if (!isValidFilePath(filePath)) {
+                    vscode.window.showErrorMessage('Invalid file path detected');
+                    return;
+                }
+                
                 // Use shell: false for security and escape the file path
                 const options = {
                     shell: false,
@@ -65,6 +79,9 @@ function activate(context) {
                 } else {
                     vscode.window.showErrorMessage('Failed to format Terraform file: The file contains invalid HCL syntax.');
                 }
+            } finally {
+                // Clear the formatting status regardless of success or failure
+                formattingInProgress.delete(filePath);
             }
         }
     });
